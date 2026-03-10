@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+ .import { Schema } from 'mongoose';
 
 // Represents the state of an interview process
 export interface InterviewState {

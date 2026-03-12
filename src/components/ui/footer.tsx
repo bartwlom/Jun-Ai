@@ -8,228 +8,168 @@ export function Footer() {
   const t = useTranslations('HomePage');
 
   return (
-    <footer className="w-full bg-card py-16 relative overflow-hidden">
-      {/* Background gradients and patterns */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/50 to-background/80"></div>
-        <div className="absolute top-0 right-0 h-[300px] w-[300px] rounded-full bg-primary/10 blur-[80px] animate-pulse-slow"></div>
-        <div
-          className="absolute bottom-0 left-0 h-[250px] w-[250px] rounded-full bg-blue-600/10 dark:bg-blue-500/10 blur-[80px] animate-pulse-slow"
-          style={{ animationDelay: '2s' }}
-        ></div>
-        <div className="h-full w-full bg-[url('/patterns/dots.svg')] bg-repeat opacity-10"></div>
+    <footer className="w-full relative overflow-hidden">
+      {/* Dark gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-[#080614] to-[#06040f] z-0" />
 
-        {/* Additional light effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-primary/5 to-transparent opacity-30"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(var(--primary-rgb),0.05),transparent_50%)]"></div>
+      {/* Aurora glow blobs */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 right-1/4 h-[250px] w-[400px] rounded-full bg-violet-600/15 blur-[100px] animate-pulse-slow" />
+        <div
+          className="absolute bottom-0 left-1/4 h-[200px] w-[350px] rounded-full bg-cyan-500/10 blur-[90px] animate-pulse-slow"
+          style={{ animationDelay: '2.5s' }}
+        />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      {/* Top border shimmer line */}
+      <div className="absolute top-0 left-0 right-0 h-px z-10"
+        style={{
+          background: 'linear-gradient(90deg, transparent, oklch(0.65 0.28 290 / 50%), oklch(0.62 0.18 200 / 50%), transparent)',
+        }}
+      />
+
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        {/* Brand row */}
         <div className="mb-12 flex flex-col items-center justify-center text-center">
-          <div className="mb-6 flex items-center justify-center">
-            <div className="mr-2 flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-              <Sparkles className="text-primary" size={20} />
+          <div className="mb-5 flex items-center justify-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600/30 to-cyan-500/20 border border-violet-500/30">
+              <Sparkles className="text-violet-400" size={18} />
             </div>
-            <h2 className="text-2xl font-bold">{t('title')}</h2>
+            <h2 className="text-2xl font-bold gradient-text">{t('title')}</h2>
           </div>
-          <p className="max-w-md text-center text-muted-foreground">{t('footer.description')}</p>
+          <p className="max-w-md text-center text-muted-foreground text-sm leading-relaxed">
+            {t('footer.description')}
+          </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-4">
+        {/* Links grid */}
+        <div className="grid gap-8 md:grid-cols-4 mb-12">
+          {/* Platform */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold">{t('footer.platform.title')}</h3>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400/80">
+              {t('footer.platform.title')}
+            </h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <Link
-                  href="/#features"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.platform.features')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#how-it-works"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.platform.howItWorks')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/learn-more"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.platform.learnMore')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/wishlist"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.platform.wishlist')}</span>
-                </Link>
-              </li>
+              {[
+                { href: '/#features', label: t('footer.platform.features') },
+                { href: '/#how-it-works', label: t('footer.platform.howItWorks') },
+                { href: '/learn-more', label: t('footer.platform.learnMore') },
+                { href: '/wishlist', label: t('footer.platform.wishlist') },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="transition-colors hover:text-violet-400 duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
+
+          {/* For Recruiters */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold">{t('footer.forRecruiters.title')}</h3>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400/80">
+              {t('footer.forRecruiters.title')}
+            </h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <Link
-                  href="/login/recruiter"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.forRecruiters.login')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/register/recruiter"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.forRecruiters.register')}</span>
-                </Link>
-              </li>
+              {[
+                { href: '/login/recruiter', label: t('footer.forRecruiters.login') },
+                { href: '/register/recruiter', label: t('footer.forRecruiters.register') },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="transition-colors hover:text-violet-400 duration-200">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
+
+          {/* For Candidates */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold">{t('footer.forCandidates.title')}</h3>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400/80">
+              {t('footer.forCandidates.title')}
+            </h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <Link
-                  href="/jobs"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.forCandidates.findJobs')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/login/candidate"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.forCandidates.login')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/register/candidate"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.forCandidates.register')}</span>
-                </Link>
-              </li>
+              {[
+                { href: '/jobs', label: t('footer.forCandidates.findJobs') },
+                { href: '/login/candidate', label: t('footer.forCandidates.login') },
+                { href: '/register/candidate', label: t('footer.forCandidates.register') },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="transition-colors hover:text-cyan-400 duration-200">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
+
+          {/* Company */}
           <div>
-            <h3 className="mb-4 text-lg font-semibold">{t('footer.company.title')}</h3>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-violet-400/80">
+              {t('footer.company.title')}
+            </h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.company.aboutUs')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.company.contact')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy-policy"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.company.privacyPolicy')}</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms"
-                  className="inline-flex items-center gap-1 transition-colors hover:text-primary"
-                >
-                  <span>{t('footer.company.termsOfService')}</span>
-                </Link>
-              </li>
+              {[
+                { href: '/about', label: t('footer.company.aboutUs') },
+                { href: '/contact', label: t('footer.company.contact') },
+                { href: '/privacy-policy', label: t('footer.company.privacyPolicy') },
+                { href: '/terms', label: t('footer.company.termsOfService') },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="transition-colors hover:text-violet-400 duration-200">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 border-t pt-8 text-center">
-          <div className="mb-4 flex justify-center space-x-6">
+        {/* Bottom row */}
+        <div className="border-t border-white/8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Socials */}
+          <div className="flex gap-4">
+            {/* LinkedIn */}
             <Link
               href="https://www.linkedin.com/in/sumanta-kabiraj/"
               target="_blank"
-              className="text-muted-foreground transition-colors hover:text-primary"
+              className="text-muted-foreground hover:text-violet-400 transition-colors duration-200"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                <rect width="4" height="12" x="2" y="9"></rect>
-                <circle cx="4" cy="4" r="2"></circle>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect width="4" height="12" x="2" y="9" />
+                <circle cx="4" cy="4" r="2" />
               </svg>
             </Link>
+            {/* Twitter/X */}
             <Link
               href="https://x.com/infysumanta"
               target="_blank"
-              className="text-muted-foreground transition-colors hover:text-primary"
+              className="text-muted-foreground hover:text-cyan-400 transition-colors duration-200"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
               </svg>
             </Link>
+            {/* Instagram */}
             <Link
               href="https://www.instagram.com/infysumanta/"
               target="_blank"
-              className="text-muted-foreground transition-colors hover:text-primary"
+              className="text-muted-foreground hover:text-fuchsia-400 transition-colors duration-200"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
               </svg>
             </Link>
           </div>
-          <p className="text-sm text-muted-foreground">
+
+          <p className="text-xs text-muted-foreground">
             {t('footer.copyright', { year: new Date().getFullYear() })}
           </p>
         </div>

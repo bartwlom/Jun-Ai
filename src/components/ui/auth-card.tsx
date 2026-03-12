@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
 import * as React from 'react';
 
 import {
@@ -28,6 +27,42 @@ interface AuthCardProps extends React.ComponentProps<typeof Card> {
   footerClassName?: string;
 }
 
+// Shared utility: get brand color values per scheme
+function getSchemeColors(colorScheme: string) {
+  switch (colorScheme) {
+    case 'blue':
+      return {
+        primary: 'rgb(59, 130, 246)',
+        secondary: 'rgb(14, 165, 233)',
+        borderClass: 'border-blue-500/25 dark:border-blue-400/30',
+      };
+    case 'purple':
+      return {
+        primary: 'rgb(168, 85, 247)',
+        secondary: 'rgb(217, 70, 239)',
+        borderClass: 'border-purple-500/25 dark:border-purple-400/30',
+      };
+    case 'cyan':
+      return {
+        primary: 'rgb(14, 165, 233)',
+        secondary: 'rgb(20, 184, 166)',
+        borderClass: 'border-cyan-500/25 dark:border-cyan-400/30',
+      };
+    case 'indigo':
+      return {
+        primary: 'rgb(139, 92, 246)',
+        secondary: 'rgb(14, 165, 233)',
+        borderClass: 'border-violet-500/25 dark:border-violet-400/30',
+      };
+    default:
+      return {
+        primary: 'rgb(139, 92, 246)',
+        secondary: 'rgb(14, 165, 233)',
+        borderClass: 'border-violet-500/25 dark:border-violet-400/30',
+      };
+  }
+}
+
 export function AuthCard({
   colorScheme = 'default',
   children,
@@ -40,122 +75,30 @@ export function AuthCard({
   footerClassName,
   ...props
 }: AuthCardProps) {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
-  // Get border gradient based on color scheme
-  const getBorderGradient = () => {
-    switch (colorScheme) {
-      case 'blue':
-        return isDark ? 'border-blue-600/25 dark:border-blue-500/30' : 'border-blue-500/20';
-      case 'purple':
-        return isDark ? 'border-purple-600/25 dark:border-purple-500/30' : 'border-purple-500/20';
-      case 'cyan':
-        return isDark ? 'border-cyan-600/25 dark:border-cyan-500/30' : 'border-cyan-500/20';
-      case 'indigo':
-        return isDark ? 'border-indigo-600/25 dark:border-indigo-500/30' : 'border-indigo-500/20';
-      default:
-        return isDark ? 'border-primary/25 dark:border-primary/30' : 'border-primary/20';
-    }
-  };
-
-  // Get shadow color based on color scheme
-  const getShadowColor = () => {
-    switch (colorScheme) {
-      case 'blue':
-        return isDark ? 'shadow-blue-600/15 dark:shadow-blue-500/10' : 'shadow-blue-500/10';
-      case 'purple':
-        return isDark ? 'shadow-purple-600/15 dark:shadow-purple-500/10' : 'shadow-purple-500/10';
-      case 'cyan':
-        return isDark ? 'shadow-cyan-600/15 dark:shadow-cyan-500/10' : 'shadow-cyan-500/10';
-      case 'indigo':
-        return isDark ? 'shadow-indigo-600/15 dark:shadow-indigo-500/10' : 'shadow-indigo-500/10';
-      default:
-        return isDark ? 'shadow-primary/15 dark:shadow-primary/10' : 'shadow-primary/10';
-    }
-  };
-
-  // Get base color for animations based on color scheme
-  const getBaseColor = () => {
-    switch (colorScheme) {
-      case 'blue':
-        return isDark ? 'rgb(37, 99, 235)' : 'rgb(59, 130, 246)'; // blue-600 : blue-500
-      case 'purple':
-        return isDark ? 'rgb(147, 51, 234)' : 'rgb(168, 85, 247)'; // purple-600 : purple-500
-      case 'cyan':
-        return isDark ? 'rgb(8, 145, 178)' : 'rgb(14, 165, 233)'; // cyan-600 : cyan-500
-      case 'indigo':
-        return isDark ? 'rgb(79, 70, 229)' : 'rgb(99, 102, 241)'; // indigo-600 : indigo-500
-      default:
-        return isDark ? 'rgb(79, 70, 229)' : 'rgb(99, 102, 241)'; // default to indigo
-    }
-  };
+  const { primary, secondary, borderClass } = getSchemeColors(colorScheme);
 
   return (
     <motion.div
       className="relative w-full"
-      initial={{ boxShadow: `0 0 0 rgba(0,0,0,0)` }}
       animate={{
         boxShadow: [
-          `0 0 8px ${getBaseColor()}10`,
-          `0 0 12px ${getBaseColor()}15`,
-          `0 0 8px ${getBaseColor()}10`,
+          `0 0 20px ${primary}22, 0 0 60px ${secondary}11`,
+          `0 0 35px ${primary}44, 0 0 80px ${secondary}22`,
+          `0 0 20px ${primary}22, 0 0 60px ${secondary}11`,
         ],
       }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-        repeatType: 'reverse',
-        ease: 'easeInOut',
-      }}
+      transition={{ duration: 4, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
     >
-      {' '}
-      <motion.div
-        className="absolute inset-0 rounded-lg"
-        style={safeStyle({
-          background: `linear-gradient(45deg, ${getBaseColor()}15, ${getBaseColor()}45, ${getBaseColor()}15)`,
-          backgroundSize: '200% 200%',
-          zIndex: -1,
-        })}
-        animate={{
-          backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          repeatType: 'reverse',
-          ease: 'easeInOut',
-        }}
-      />
       <Card
         className={cn(
-          'w-full backdrop-blur-sm border-2 relative overflow-hidden',
-          getBorderGradient(),
-          'bg-card/85 dark:bg-card/75',
-          'shadow-xl',
-          getShadowColor(),
+          'w-full backdrop-blur-2xl border relative overflow-hidden',
+          borderClass,
+          'bg-white/5 dark:bg-white/[0.04]',
+          'shadow-2xl',
           className
         )}
         {...props}
       >
-        {/* Animated border glow effect */}
-        <motion.div
-          className="absolute inset-0 rounded-lg pointer-events-none"
-          style={safeStyle({
-            zIndex: 0,
-            opacity: 0.5,
-          })}
-          animate={{
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            repeatType: 'reverse',
-            ease: 'easeInOut',
-          }}
-        />
-
         <CardHeader className={cn('space-y-1 relative z-10', headerClassName)}>
           <CardTitle className="text-2xl font-bold">{title}</CardTitle>
           {description && <CardDescription>{description}</CardDescription>}
@@ -184,122 +127,76 @@ export function AnimatedAuthCard({
   footerClassName,
   ...props
 }: AuthCardProps) {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
-
-  // Get border gradient based on color scheme
-  const getBorderGradient = () => {
-    switch (colorScheme) {
-      case 'blue':
-        return isDark ? 'border-blue-600/25 dark:border-blue-500/30' : 'border-blue-500/20';
-      case 'purple':
-        return isDark ? 'border-purple-600/25 dark:border-purple-500/30' : 'border-purple-500/20';
-      case 'cyan':
-        return isDark ? 'border-cyan-600/25 dark:border-cyan-500/30' : 'border-cyan-500/20';
-      case 'indigo':
-        return isDark ? 'border-indigo-600/25 dark:border-indigo-500/30' : 'border-indigo-500/20';
-      default:
-        return isDark ? 'border-primary/25 dark:border-primary/30' : 'border-primary/20';
-    }
-  };
-
-  // Get shadow color based on color scheme
-  const getShadowColor = () => {
-    switch (colorScheme) {
-      case 'blue':
-        return isDark ? 'shadow-blue-600/15 dark:shadow-blue-500/10' : 'shadow-blue-500/10';
-      case 'purple':
-        return isDark ? 'shadow-purple-600/15 dark:shadow-purple-500/10' : 'shadow-purple-500/10';
-      case 'cyan':
-        return isDark ? 'shadow-cyan-600/15 dark:shadow-cyan-500/10' : 'shadow-cyan-500/10';
-      case 'indigo':
-        return isDark ? 'shadow-indigo-600/15 dark:shadow-indigo-500/10' : 'shadow-indigo-500/10';
-      default:
-        return isDark ? 'shadow-primary/15 dark:shadow-primary/10' : 'shadow-primary/10';
-    }
-  };
-
-  // Get base color for animations based on color scheme
-  const getBaseColor = () => {
-    switch (colorScheme) {
-      case 'blue':
-        return isDark ? 'rgb(37, 99, 235)' : 'rgb(59, 130, 246)'; // blue-600 : blue-500
-      case 'purple':
-        return isDark ? 'rgb(147, 51, 234)' : 'rgb(168, 85, 247)'; // purple-600 : purple-500
-      case 'cyan':
-        return isDark ? 'rgb(8, 145, 178)' : 'rgb(14, 165, 233)'; // cyan-600 : cyan-500
-      case 'indigo':
-        return isDark ? 'rgb(79, 70, 229)' : 'rgb(99, 102, 241)'; // indigo-600 : indigo-500
-      default:
-        return isDark ? 'rgb(79, 70, 229)' : 'rgb(99, 102, 241)'; // default to indigo
-    }
-  };
+  const { primary, secondary, borderClass } = getSchemeColors(colorScheme);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
         className="relative w-full"
-        initial={{ boxShadow: `0 0 0 rgba(0,0,0,0)` }}
         animate={{
           boxShadow: [
-            `0 0 8px ${getBaseColor()}10`,
-            `0 0 12px ${getBaseColor()}15`,
-            `0 0 8px ${getBaseColor()}10`,
+            `0 0 20px ${primary}22, 0 0 60px ${secondary}11`,
+            `0 0 40px ${primary}44, 0 0 100px ${secondary}22`,
+            `0 0 20px ${primary}22, 0 0 60px ${secondary}11`,
           ],
         }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          repeatType: 'reverse',
-          ease: 'easeInOut',
-        }}
+        transition={{ duration: 4, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }}
       >
-        <GradientBackground baseColor={getBaseColor()} className="rounded-lg" />
+        <GradientBackground baseColor={primary} className="rounded-xl opacity-60" />
+
+        {/* Neon border gradient overlay */}
+        <div
+          className="absolute inset-0 rounded-xl pointer-events-none z-0"
+          style={safeStyle({
+            background: `linear-gradient(135deg, ${primary}30 0%, transparent 50%, ${secondary}20 100%)`,
+          })}
+        />
+
         <Card
           className={cn(
-            'w-full backdrop-blur-sm border-2 relative overflow-hidden',
-            getBorderGradient(),
-            'bg-card/85 dark:bg-card/75',
-            'shadow-xl',
-            getShadowColor(),
+            'w-full backdrop-blur-2xl border relative overflow-hidden rounded-xl',
+            borderClass,
+            'bg-white/5 dark:bg-white/[0.04]',
+            'shadow-2xl',
             className
           )}
           {...props}
         >
-          {/* Animated border glow effect */}
-          <motion.div
-            className="absolute inset-0 rounded-lg pointer-events-none"
+          {/* Shimmer top-edge highlight */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px z-10 pointer-events-none"
             style={safeStyle({
-              opacity: 0.3,
-              zIndex: 0,
+              background: `linear-gradient(90deg, transparent, ${primary}80, ${secondary}80, transparent)`,
             })}
-            animate={{
-              opacity: [0.2, 0.3, 0.2],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              repeatType: 'reverse',
-              ease: 'easeInOut',
-            }}
           />
 
           <CardHeader className={cn('space-y-1 relative z-10', headerClassName)}>
-            <div className="flex flex-col items-center mb-6">
-              <Image
-                src="/images/hirelytics-logo.svg"
-                alt="Hirelytics"
-                width={64}
-                height={64}
-                className="h-16 w-16 mb-4 dark:invert-[0.15] dark:brightness-110"
-              />
+            <div className="flex flex-col items-center mb-4">
+              <div
+                className="h-16 w-16 mb-4 rounded-2xl flex items-center justify-center"
+                style={safeStyle({
+                  background: `linear-gradient(135deg, ${primary}30, ${secondary}20)`,
+                  border: `1px solid ${primary}40`,
+                  boxShadow: `0 0 20px ${primary}30`,
+                })}
+              >
+                <Image
+                  src="/images/hirelytics-logo.svg"
+                  alt="Hirelytics"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 dark:invert-[0.1] dark:brightness-110"
+                />
+              </div>
             </div>
-            <CardTitle className="text-2xl font-bold">{title}</CardTitle>
-            {description && <CardDescription>{description}</CardDescription>}
+            <CardTitle className="text-2xl font-bold text-center">{title}</CardTitle>
+            {description && (
+              <CardDescription className="text-center">{description}</CardDescription>
+            )}
           </CardHeader>
           <CardContent className={cn('relative z-10', contentClassName)}>{children}</CardContent>
           {footer && (

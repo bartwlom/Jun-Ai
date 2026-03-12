@@ -28,7 +28,7 @@ import { AnimatedBackground } from '@/components/ui/animated-background';
 import { Button } from '@/components/ui/button';
 import { Footer } from '@/components/ui/footer';
 
-// Animation variants
+
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -65,9 +65,8 @@ const featureCardVariants = {
 export default function Home() {
   const t = useTranslations('HomePage');
   const common = useTranslations('Common');
-  const locale = useLocale(); // Add this line to get current locale
+  const locale = useLocale();
 
-  // Define animation sequences based on translations
   const headingSequence = [
     t('typingAnimation.aiPowered'),
     1500,

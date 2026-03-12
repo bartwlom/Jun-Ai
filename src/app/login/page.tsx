@@ -8,7 +8,7 @@ import { AnimatedBackground } from '@/components/ui/animated-background';
 import { AnimatedAuthCard } from '@/components/ui/auth-card';
 import { Button } from '@/components/ui/button';
 
-// Animation variants for staggered children
+
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: {

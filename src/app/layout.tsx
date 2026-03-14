@@ -23,7 +23,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
-  subsets: ['latin'],
+  subsets: ['latin']
 });
 
 export const metadata: Metadata = {
@@ -55,7 +55,7 @@ export default async function RootLayout({
             <div className="flex-1">{children}</div>
           </div>
           <Toaster richColors />
-        </RootProvider>
+        </RootProvider> 
       </body>
     </html>
   );

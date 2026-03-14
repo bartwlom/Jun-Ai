@@ -14,7 +14,9 @@ export type SkillCategory =
   | 'ai'
   | 'design'
   | 'testing'
-  | 'other';
+  | 'other'
+  | 'soft-skills'
+  ;
 
 export const technicalSkills: Skill[] = [
   // Programming Languages
@@ -30,6 +32,7 @@ export const technicalSkills: Skill[] = [
   { value: 'ruby', label: 'Ruby', category: 'programming' },
   { value: 'swift', label: 'Swift', category: 'programming' },
   { value: 'kotlin', label: 'Kotlin', category: 'programming' },
+  
 
   // Frontend
   { value: 'react', label: 'React', category: 'frontend' },
@@ -156,6 +159,7 @@ export const skillsByCategory = technicalSkills.reduce<Record<SkillCategory, Ski
     design: [],
     testing: [],
     other: [],
+    'soft-skills': [],
   }
 );
 
